@@ -1,0 +1,15 @@
+version: '3'
+services:
+  rcepp:
+    build: .
+    container_name: rcepp_standalone
+    ports:
+      - "5011:5000"  # Map host port 5011 to container port 5000
+    restart: unless-stopped
+    networks:
+      - rcepp_network
+
+networks:
+  rcepp_network:
+    driver: bridge
+

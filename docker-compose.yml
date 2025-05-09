@@ -1,0 +1,100 @@
+version: '3'
+
+services:
+  # Authentication Bypass Lab
+  auth_bypass:
+    build: ./Authentication_Bypass
+    container_name: auth_bypass_lab
+    ports:
+      - "5017:5000"
+    restart: unless-stopped
+    networks:
+      - auth_bypass_network
+
+  # Command Injection Lab
+  command_injection:
+    build: ./Command_Injection
+    container_name: command_injection_lab
+    ports:
+      - "5016:5000"
+    restart: unless-stopped
+    networks:
+      - command_injection_network
+
+  # IDOR Lab 1
+  idor_1:
+    build: ./IDOR_1
+    container_name: idor_1_lab
+    ports:
+      - "5013:5000"
+    restart: unless-stopped
+    networks:
+      - idor_1_network
+
+  # IDOR Lab 2
+  idor_2:
+    build: ./IDOR_2
+    container_name: idor_2_lab
+    ports:
+      - "5010:5000"
+    restart: unless-stopped
+    networks:
+      - idor_2_network
+
+  # Path Traversal Lab
+  path_traversal:
+    build: ./Path_Traversal
+    container_name: path_traversal_lab
+    ports:
+      - "5012:5000"
+    restart: unless-stopped
+    networks:
+      - path_traversal_network
+
+  # Prototype Pollution Lab
+  prototype_pollution:
+    build: ./Prototype_pollution
+    container_name: prototype_pollution_lab
+    ports:
+      - "5011:5000"
+    restart: unless-stopped
+    networks:
+      - prototype_pollution_network
+
+  # SQL Injection Lab
+  sql_injection:
+    build: ./SQL
+    container_name: sql_injection_lab
+    ports:
+      - "5014:5000"
+    restart: unless-stopped
+    networks:
+      - sql_injection_network
+
+  # SSRF Lab
+  ssrf:
+    build: ./SSRF
+    container_name: ssrf_lab
+    ports:
+      - "5015:5000"
+    restart: unless-stopped
+    networks:
+      - ssrf_network
+
+networks:
+  auth_bypass_network:
+    driver: bridge
+  command_injection_network:
+    driver: bridge
+  idor_1_network:
+    driver: bridge
+  idor_2_network:
+    driver: bridge
+  path_traversal_network:
+    driver: bridge
+  prototype_pollution_network:
+    driver: bridge
+  sql_injection_network:
+    driver: bridge
+  ssrf_network:
+    driver: bridge

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  sqllab:
+    build: .
+    container_name: sqllab_standalone
+    ports:
+      - "5014:5000"  # Map host port 5014 to container port 5000
+    restart: unless-stopped
+    networks:
+      - sqllab_network
+networks:
+  sqllab_network:
+    driver: bridge

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  ssrf:
+    build: .
+    container_name: ssrf_standalone
+    ports:
+      - "5015:5000"  # Map host port 5015 to container port 5000
+    restart: unless-stopped
+    networks:
+      - ssrf_network
+networks:
+  ssrf_network:
+    driver: bridge

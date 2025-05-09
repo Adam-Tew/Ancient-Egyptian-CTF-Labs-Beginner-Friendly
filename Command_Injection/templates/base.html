@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Book of the Dead - Soul Path Oracle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --egyptian-gold: #FFD700;
+            --egyptian-blue: #0f4770;
+            --papyrus: #f4e9c1;
+            --hieroglyph-color: #8B4513;
+            --anubis-black: #111111;
+        }
+        
+        body {
+            font-family: 'IM Fell English SC', serif;
+            background-color: #000000;
+            background-image: url("/static/images/papyrus-texture.jpg");
+            background-repeat: repeat;
+            color: var(--hieroglyph-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        header {
+            background-color: var(--egyptian-blue);
+            color: var(--egyptian-gold);
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 5px solid var(--egyptian-gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-title {
+            flex: 1;
+            padding: 0 15px;
+        }
+        
+        .header-image {
+            flex: 0 0 auto;
+            width: 90px;
+            height: 90px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+        .header-god-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 2px solid var(--egyptian-gold);
+            border-radius: 5px;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            letter-spacing: 1px;
+        }
+        
+        header .subtitle {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+        
+        footer {
+            background-color: var(--egyptian-blue);
+            color: var(--papyrus);
+            text-align: center;
+            padding: 15px;
+            border-top: 5px solid var(--egyptian-gold);
+            margin-top: auto;
+        }
+        
+        .timer {
+            display: inline-block;
+            background-color: var(--egyptian-gold);
+            color: var(--egyptian-blue);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .flashes {
+            background-color: rgba(255, 215, 0, 0.2);
+            border: 2px solid var(--egyptian-gold);
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 20px 0;
+            color: var(--hieroglyph-color);
+        }
+        
+        .flash {
+            margin: 5px 0;
+        }
+        
+        .flash a {
+            color: var(--egyptian-blue);
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .flash a:hover {
+            color: var(--egyptian-gold);
+            background-color: var(--egyptian-blue);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        /* Hieroglyphic borders */
+        .hieroglyph-border {
+            border: 2px solid var(--egyptian-gold);
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: rgba(244, 233, 193, 0.9);
+            border-radius: 5px;
+        }
+        
+        .hieroglyph-border::before,
+        .hieroglyph-border::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-image: url("/static/images/hieroglyph-border.png");
+            background-repeat: repeat-x;
+        }
+        
+        .hieroglyph-border::before {
+            top: -5px;
+        }
+        
+        .hieroglyph-border::after {
+            bottom: -5px;
+        }
+        
+        /* Session timeout notification */
+        .session-timeout {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .timeout-content {
+            background-color: var(--papyrus);
+            border: 4px solid var(--egyptian-gold);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(218, 165, 32, 0.6);
+        }
+
+        .timeout-content h2 {
+            color: var(--egyptian-blue);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .timeout-content p {
+            color: var(--hieroglyph-color);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        #restart-btn {
+            background-color: var(--egyptian-blue);
+            color: var(--egyptian-gold);
+            border: 2px solid var(--egyptian-gold);
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            font-family: 'IM Fell English SC', serif;
+        }
+
+        #restart-btn:hover {
+            background-color: var(--egyptian-gold);
+            color: var(--egyptian-blue);
+        }
+        
+        {% block extra_styles %}{% endblock %}
+    </style>
+    <!-- The truth lies not in what the eyes can see, but in what the interceptor  reveals. Look beyond the visible realm for answers. -->
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-image left">
+                <img src="/static/images/anubis.jpg" alt="Anubis" class="header-god-image">
+            </div>
+            <div class="header-title">
+                <h1>The Book of the Dead - Soul Path Oracle</h1>
+                <div class="subtitle">Portal to the Egyptian Underworld</div>
+            </div>
+            <div class="header-image right">
+                <img src="/static/images/thoth.jpg" alt="Thoth" class="header-god-image">
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for message in messages %}
+                        <div class="flash">{{ message|safe_message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        <p>
+            Temple of Anubis &copy; 1500 BCE | Digitized 2025 CE
+            {% if session.get('instance_id') %}
+                | Session Time Remaining: <span class="timer" id="footer-countdown">{{ remaining_time // 60 }}:{{ remaining_time % 60 }}</span>
+            {% endif %}
+        </p>
+    </footer>
+    
+    <script>
+        // Timer script - server-side timing with client display
+        {% if session.get('instance_id') %}
+            let remainingSeconds = {{ remaining_time }};
+            
+            function updateTimer() {
+                const minutes = Math.floor(remainingSeconds / 60);
+                const seconds = remainingSeconds % 60;
+                
+                // Format with leading zeros
+                const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+                const displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                // Update footer timer display
+                document.getElementById('footer-countdown').textContent = `${displayMinutes}:${displaySeconds}`;
+                
+                if (remainingSeconds <= 0) {
+                    // Create and show timeout message
+                    const timeoutDiv = document.createElement('div');
+                    timeoutDiv.className = 'session-timeout';
+                    timeoutDiv.innerHTML = `
+                        <div class="timeout-content">
+                            <h2>Session Time Expired</h2>
+                            <p>Your journey through the Egyptian underworld has ended.</p>
+                            <p>A new session with a fresh virtual environment will begin.</p>
+                            <button id="restart-btn">Begin New Journey</button>
+                        </div>
+                    `;
+                    document.body.appendChild(timeoutDiv);
+                    
+                    // Fixed: Add the reset=true parameter to properly reset the session
+                    document.getElementById('restart-btn').addEventListener('click', function() {
+                        window.location.href = "{{ url_for('index') }}?reset=true";
+                    });
+                    
+                    // Remove automatic redirect to prevent continuous refresh issue
+                } else {
+                    remainingSeconds--;
+                    setTimeout(updateTimer, 1000);
+                }
+            }
+            
+            // Start the timer
+            updateTimer();
+        {% endif %}
+    </script>
+</body>
+</html>

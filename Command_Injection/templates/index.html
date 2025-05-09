@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+    <style>
+        .query-form {
+            background-color: rgba(244, 233, 193, 0.9);
+            padding: 30px;
+            border: 3px solid var(--egyptian-blue);
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        .query-form::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .query-form h2 {
+            color: var(--egyptian-blue);
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--egyptian-blue);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--egyptian-blue);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--anubis-black);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .submit-button {
+            background-color: var(--egyptian-blue);
+            color: var(--egyptian-gold);
+            border: 2px solid var(--egyptian-gold);
+            padding: 12px 20px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-button:hover {
+            background-color: #0a345c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .intro-text {
+            text-align: center;
+            margin: 30px auto;
+            max-width: 700px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: var(--hieroglyph-color);
+        }
+        
+        .result-container {
+            background-color: rgba(244, 233, 193, 0.9);
+            padding: 25px;
+            border: 2px solid var(--egyptian-blue);
+            border-radius: 8px;
+            margin: 30px auto;
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .result-text {
+            font-size: 1.3rem;
+            color: var(--egyptian-blue);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="intro-text">
+        <p>You stand before the ancient device, a portal to the Egyptian underworld. This sacred technology, powered by the wisdom of Thoth, allows communication with the realm of the dead. For thousands of years, high priests used this oracle to unveil the fate of departed souls as they journeyed through Duat.</p>
+    </div>
+        
+    {% if result %}
+    <div class="result-container">
+        <div class="result-text">{{ result }}</div>
+        <img src="/static/images/scales-of-justice.png" alt="Scales of Justice" style="width: 80px; margin: 20px auto;">
+    </div>
+    {% endif %}
+    
+    <div class="query-form">
+        <h2>Consult the Book of the Dead</h2>
+        <form action="/" method="post">
+            <div class="form-group">
+                <label for="name">Enter the name of the departed soul:</label>
+                <input type="text" id="name" name="name" placeholder="e.g., Ramses II, Tutankhamun, Nefertiti..." required>
+            </div>
+            
+            <button type="submit" class="submit-button">Reveal Their Path</button>
+        </form>
+    </div>
+    
+    <div class="hieroglyph-border">
+        <p>The ancient Egyptians believed that upon death, one's heart would be weighed against the feather of Ma'at, the goddess of truth and justice. Those whose hearts were lighter than the feather would be granted passage to the eternal paradise of the Field of Reeds.</p>
+        <p>Those whose hearts were heavier than the feather would be devoured by Ammit, the "Devourer of the Dead," and their souls would cease to exist. The Book of the Dead contained spells and instructions to help the deceased navigate the dangerous journey through the underworld.</p>
+    </div>
+{% endblock %}

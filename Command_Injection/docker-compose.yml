@@ -1,0 +1,13 @@
+version: '3'
+services:
+  os:
+    build: .
+    container_name: os_standalone
+    ports:
+      - "5016:5000"  # Map host port 5016 to container port 5000
+    restart: unless-stopped
+    networks:
+      - os_network
+networks:
+  os_network:
+    driver: bridge

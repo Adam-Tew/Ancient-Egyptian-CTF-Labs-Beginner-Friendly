@@ -1,0 +1,13 @@
+version: '3'
+services:
+  ptlab:
+    build: .
+    container_name: ptlab_standalone
+    ports:
+      - "5012:5000"  # Map host port 5012 to container port 5000
+    restart: unless-stopped
+    networks:
+      - ptlab_network
+networks:
+  ptlab_network:
+    driver: bridge

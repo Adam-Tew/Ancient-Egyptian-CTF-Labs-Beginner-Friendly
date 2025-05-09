@@ -1,0 +1,13 @@
+version: '3'
+services:
+  idor2:
+    build: .
+    container_name: idor2_standalone
+    ports:
+      - "5010:5000"  # Map host port 5010 to container port 5000
+    restart: unless-stopped
+    networks:
+      - idor2_network
+networks:
+  idor2_network:
+    driver: bridge
